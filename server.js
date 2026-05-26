@@ -23,7 +23,7 @@ const server = http.createServer((req, res) => {
         const { email, name } = JSON.parse(body);
         const payload = JSON.stringify({
           api_key: KIT_API_KEY,
-          email_address: email,
+          email: email,
           first_name: name
         });
         const options = {
