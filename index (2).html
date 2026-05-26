@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The 10 Poverty Patterns Assessment — Sovereignty OS</title>
+</head>
+<body>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@300;400;500&display=swap');
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--gold:#C9A84C;--dark:#0D0D0D;--cream:#FAF7F0;--green:#1B4332;--mid:#6B6B6B;--light:#F0EDE6;--border:#E2DDD5;--red:#8B1A1A;}
+body{background:var(--cream)}
+.app{font-family:'DM Sans',sans-serif;max-width:680px;margin:0 auto;padding:2rem 1rem 4rem}
+.intro{text-align:center;padding:2rem 0 1.5rem}
+.intro-eyebrow{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem}
+.intro-title{font-family:'Cormorant Garamond',serif;font-size:clamp(32px,6vw,52px);font-weight:600;color:var(--dark);line-height:1.1;margin-bottom:1rem}
+.intro-title em{font-style:italic;color:var(--green)}
+.intro-sub{font-size:15px;line-height:1.75;color:var(--mid);max-width:480px;margin:0 auto 2rem}
+.intro-meta{display:flex;gap:24px;justify-content:center;flex-wrap:wrap;margin-bottom:2rem}
+.meta-item{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.1em;color:var(--mid);text-transform:uppercase}
+.meta-item span{display:block;font-size:14px;font-weight:500;color:var(--dark);letter-spacing:0;font-family:'DM Sans',sans-serif;margin-top:3px}
+.start-btn{background:var(--dark);color:var(--cream);border:none;padding:14px 40px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;letter-spacing:.05em;cursor:pointer;transition:all .2s}
+.start-btn:hover{background:var(--green)}
+.divider{width:40px;height:1px;background:var(--gold);margin:1.5rem auto}
+.progress-bar{height:2px;background:var(--border);margin-bottom:2.5rem}
+.progress-fill{height:100%;background:var(--gold);transition:width .4s ease}
+.progress-label{font-family:'DM Mono',monospace;font-size:10px;color:var(--mid);letter-spacing:.08em;margin-bottom:.5rem;display:flex;justify-content:space-between}
+.q-block{animation:fadeIn .3s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.q-number{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.15em;color:var(--gold);margin-bottom:.75rem;text-transform:uppercase}
+.q-text{font-family:'Cormorant Garamond',serif;font-size:clamp(18px,3vw,24px);font-weight:600;color:var(--dark);line-height:1.35;margin-bottom:2rem}
+.scale-container{margin-bottom:2.5rem}
+.scale-labels{display:flex;justify-content:space-between;margin-bottom:.75rem}
+.scale-label{font-size:11px;color:var(--mid);font-family:'DM Mono',monospace;letter-spacing:.05em}
+.scale-options{display:flex;gap:8px;justify-content:center}
+.scale-btn{width:48px;height:48px;border:0.5px solid var(--border);background:white;cursor:pointer;font-family:'DM Mono',monospace;font-size:13px;font-weight:500;color:var(--mid);transition:all .15s;flex-shrink:0}
+.scale-btn:hover{border-color:var(--gold);color:var(--dark)}
+.scale-btn.selected{background:var(--dark);color:var(--cream);border-color:var(--dark)}
+.scale-btn[data-val="5"].selected{background:var(--green);border-color:var(--green)}
+.nav-row{display:flex;justify-content:space-between;align-items:center;margin-top:1rem}
+.nav-btn{background:none;border:0.5px solid var(--border);padding:10px 24px;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--mid);cursor:pointer;transition:all .15s}
+.nav-btn:hover{border-color:var(--dark);color:var(--dark)}
+.nav-btn.primary{background:var(--dark);color:var(--cream);border-color:var(--dark)}
+.nav-btn.primary:hover{background:var(--green);border-color:var(--green)}
+.nav-btn:disabled{opacity:.3;cursor:not-allowed}
+.gate{text-align:center;padding:1rem 0}
+.gate-title{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:600;color:var(--dark);margin-bottom:.5rem}
+.gate-sub{font-size:14px;color:var(--mid);line-height:1.7;margin-bottom:2rem;max-width:400px;margin-left:auto;margin-right:auto}
+.field-group{text-align:left;margin-bottom:1rem}
+.field-label{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.1em;color:var(--mid);text-transform:uppercase;margin-bottom:6px;display:block}
+.field-input{width:100%;padding:12px 14px;border:0.5px solid var(--border);background:white;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--dark);outline:none;transition:border-color .15s}
+.field-input:focus{border-color:var(--gold)}
+.gate-error{font-size:12px;color:var(--red);margin-top:.5rem;font-family:'DM Mono',monospace;display:none}
+.results{animation:fadeIn .5s ease}
+.results-header{text-align:center;padding:1.5rem 0 2rem;border-bottom:0.5px solid var(--border);margin-bottom:2rem}
+.results-eyebrow{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.2em;color:var(--gold);margin-bottom:.75rem;text-transform:uppercase}
+.results-name{font-family:'Cormorant Garamond',serif;font-size:clamp(26px,5vw,42px);font-weight:600;color:var(--dark);line-height:1.1;margin-bottom:.5rem}
+.results-tagline{font-size:14px;color:var(--mid);line-height:1.7;max-width:440px;margin:0 auto}
+.pattern-card{border:0.5px solid var(--border);margin-bottom:1rem;overflow:hidden}
+.pattern-card-header{padding:1.25rem 1.5rem;display:flex;align-items:flex-start;justify-content:space-between;gap:1rem}
+.pattern-badge{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.15em;text-transform:uppercase;padding:3px 10px;margin-bottom:.5rem;display:inline-block}
+.badge-primary{background:var(--dark);color:var(--gold)}
+.badge-secondary{background:var(--green);color:white}
+.badge-tertiary{background:var(--border);color:var(--mid)}
+.pattern-name{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;color:var(--dark)}
+.pattern-score-ring{width:56px;height:56px;border-radius:50%;border:1.5px solid var(--border);display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0}
+.score-num{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:700;color:var(--dark);line-height:1}
+.score-max{font-size:9px;color:var(--mid);font-family:'DM Mono',monospace}
+.pattern-card-body{padding:0 1.5rem 1.5rem;border-top:0.5px solid var(--border)}
+.pattern-truth{font-size:14px;line-height:1.75;color:var(--dark);margin-top:1rem;margin-bottom:.75rem;font-style:italic;padding-left:12px;border-left:2px solid var(--gold)}
+.pattern-theology{background:var(--light);padding:10px 14px;margin-bottom:.75rem}
+.p-theology-label{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.12em;color:var(--green);text-transform:uppercase;margin-bottom:3px}
+.p-theology-text{font-size:13px;color:var(--dark);line-height:1.65}
+.pattern-interrupt{font-size:13px;color:var(--mid);line-height:1.7;margin-top:.5rem}
+.pattern-interrupt strong{color:var(--dark)}
+.bar-wrap{height:3px;background:var(--border);margin:4px 0 8px}
+.bar-fill{height:100%;transition:width 1s ease .3s}
+.all-patterns{margin-top:2rem}
+.ap-title{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.12em;color:var(--mid);text-transform:uppercase;margin-bottom:1rem}
+.ap-row{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.ap-name{font-size:12px;color:var(--dark);width:140px;flex-shrink:0}
+.ap-bar-wrap{flex:1;height:3px;background:var(--border)}
+.ap-bar-fill{height:100%}
+.ap-score{font-family:'DM Mono',monospace;font-size:10px;color:var(--mid);width:20px;text-align:right;flex-shrink:0}
+.share-section{text-align:center;margin-top:2.5rem;padding-top:2rem;border-top:0.5px solid var(--border)}
+.share-title{font-family:'Cormorant Garamond',serif;font-size:20px;color:var(--dark);margin-bottom:.5rem}
+.share-sub{font-size:13px;color:var(--mid);margin-bottom:1.25rem;line-height:1.6}
+.share-btn{background:var(--green);color:white;border:none;padding:12px 32px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;margin-right:8px;transition:background .15s}
+.share-btn:hover{background:var(--dark)}
+.restart-btn{background:none;border:0.5px solid var(--border);padding:12px 32px;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--mid);cursor:pointer}
+.cta-box{background:var(--dark);padding:1.5rem;margin-top:1.5rem;text-align:left}
+.cta-label{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.15em;color:var(--gold);text-transform:uppercase;margin-bottom:.5rem}
+.cta-title{font-family:'Cormorant Garamond',serif;font-size:22px;color:white;margin-bottom:.5rem;line-height:1.3}
+.cta-body{font-size:13px;color:#AAA;line-height:1.65;margin-bottom:1rem}
+.cta-btn{background:var(--gold);color:var(--dark);border:none;padding:11px 28px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer}
+</style>
+
+<div class="app" id="app">
+  <div id="screen-intro">
+    <div class="intro">
+      <div class="intro-eyebrow">Sovereignty OS</div>
+      <div class="divider"></div>
+      <h1 class="intro-title">The <em>10 Poverty Patterns</em><br>Assessment</h1>
+      <p class="intro-sub">Most people believe their financial struggles are about income, discipline, or luck. They are not. They are about patterns — inherited codes running silently beneath every financial decision you make.</p>
+      <div class="intro-meta">
+        <div class="meta-item">Questions<span>40</span></div>
+        <div class="meta-item">Time<span>11–15 min</span></div>
+        <div class="meta-item">Results<span>3 patterns</span></div>
+      </div>
+      <button class="start-btn" onclick="startAssessment()">Begin the Assessment</button>
+      <p style="font-size:12px;color:var(--mid);margin-top:1rem;font-family:'DM Mono',monospace;letter-spacing:.05em">Answer honestly. The pattern cannot help you if you hide from it.</p>
+    </div>
+  </div>
+
+  <div id="screen-questions" style="display:none">
+    <div class="progress-label">
+      <span id="q-label">Question 1 of 40</span>
+      <span id="q-pct">0%</span>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+    <div class="q-block" id="q-block">
+      <div class="q-number" id="q-num">Question 1</div>
+      <div class="q-text" id="q-text"></div>
+      <div class="scale-container">
+        <div class="scale-labels">
+          <span class="scale-label">Never true</span>
+          <span class="scale-label">Always true</span>
+        </div>
+        <div class="scale-options" id="scale-options">
+          <button class="scale-btn" data-val="1" onclick="selectAnswer(1)">1</button>
+          <button class="scale-btn" data-val="2" onclick="selectAnswer(2)">2</button>
+          <button class="scale-btn" data-val="3" onclick="selectAnswer(3)">3</button>
+          <button class="scale-btn" data-val="4" onclick="selectAnswer(4)">4</button>
+          <button class="scale-btn" data-val="5" onclick="selectAnswer(5)">5</button>
+        </div>
+      </div>
+      <div class="nav-row">
+        <button class="nav-btn" id="btn-back" onclick="goBack()" disabled>Back</button>
+        <button class="nav-btn primary" id="btn-next" onclick="goNext()" disabled>Next</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="screen-gate" style="display:none">
+    <div class="gate">
+      <div class="intro-eyebrow" style="margin-bottom:1.5rem">Your results are ready</div>
+      <div class="gate-title">Where should we send your full pattern report?</div>
+      <p class="gate-sub">Your Primary, Secondary, and Tertiary patterns reveal how your financial patterns interact — and how to break the cycle. Enter your details to unlock the full analysis.</p>
+      <div class="field-group"><label class="field-label">First name</label><input class="field-input" id="gate-name" type="text" placeholder="Your first name"></div>
+      <div class="field-group"><label class="field-label">Email address</label><input class="field-input" id="gate-email" type="email" placeholder="your@email.com"></div>
+      <div class="gate-error" id="gate-error">Please enter a valid email address.</div>
+      <button class="start-btn" id="gate-submit" onclick="submitGate()" style="width:100%;margin-top:.5rem">Reveal My Patterns</button>
+      <p style="font-size:11px;color:var(--mid);margin-top:.75rem;font-family:'DM Mono',monospace;letter-spacing:.04em">No spam. Your results + weekly sovereign insights only.</p>
+    </div>
+  </div>
+
+  <div id="screen-results" style="display:none"></div>
+</div>
+
+<script>
+const QUESTIONS=[{p:'E',text:"When my paycheck arrives, my first instinct is to figure out which bills I'm already behind on."},{p:'E',text:"My financial life feels like one crisis resolving just as another one begins."},{p:'E',text:"I struggle to think beyond this month — long-term financial planning feels like a luxury I don't have."},{p:'E',text:"An unexpected expense doesn't just stress me financially — it feels like proof that I will never get ahead."},{p:'SC',text:"Even when I can afford something, spending money on myself feels wrong or wasteful."},{p:'SC',text:"I find myself calculating the cheapest option in situations where money genuinely isn't the issue."},{p:'SC',text:"I worry about running out — not just of money, but of time, opportunity, and resources."},{p:'SC',text:"Watching others spend freely makes me anxious, almost offended — like they don't understand how fragile things really are."},{p:'V',text:"When I think honestly about why I'm not further ahead financially, the system, my background, or my circumstances play a major role."},{p:'V',text:"When I hear advice about building wealth, my first thought is usually about why it wouldn't work for someone in my situation."},{p:'V',text:"I have tried to improve my finances before and been let down — by circumstances, by people, or by things outside my control."},{p:'V',text:"The opportunities that seem available to others simply haven't shown up for me in the same way."},{p:'M',text:"I measure how well I'm doing financially by what I see the people around me doing — peers, family, or social media."},{p:'M',text:"Other people's financial wins make me feel the gap between where I am and where I should be more sharply."},{p:'M',text:"Some of my financial decisions have been driven by not wanting to appear behind — to family, friends, or my community."},{p:'M',text:"I spend more than I should on things that signal success, even when it's not aligned with my actual goals."},{p:'I',text:"When money comes in — a bonus, a windfall, a gift — I find it difficult to let it sit without spending or doing something with it immediately."},{p:'I',text:"I have made financial decisions quickly, felt the urgency to act, and later realised I should have waited."},{p:'I',text:"The idea of building wealth over 5 to 10 years frustrates me — I need to see results now to stay motivated."},{p:'I',text:"I have used payment plans, credit, or borrowing not out of necessity but because waiting to save felt impossible."},{p:'F',text:"When I am struggling financially, my instinct is to handle it quietly and alone — not to show it or ask for help."},{p:'F',text:"Admitting I don't know something about money — to a mentor, advisor, or even a friend — feels uncomfortable or exposing."},{p:'F',text:"I believe that my financial situation is specific enough that general advice or outside perspectives rarely apply to me."},{p:'F',text:"I prefer to figure things out myself rather than let someone into my financial world, even if that person could genuinely help."},{p:'ID',text:"Deep down, I find it hard to picture myself as someone who builds and holds significant wealth."},{p:'ID',text:"I carry an inherited belief — from family, culture, or church — that people like me are not meant to accumulate wealth."},{p:'ID',text:"When I do well financially, a part of me waits for it to fall apart — as if the success isn't really mine to keep."},{p:'ID',text:"The messages I received growing up about money — spoken or unspoken — still shape how I behave with it today."},{p:'OB',text:"Money that comes into my life tends to leave quickly — toward family needs, community requests, or people who depend on me."},{p:'OB',text:"I find it difficult to invest in myself or my future when people around me have immediate financial needs."},{p:'OB',text:"I give financially out of obligation or guilt as much as I do out of genuine desire — and I rarely say no."},{p:'OB',text:"My generosity has cost me financially in ways I haven't fully admitted to myself."},{p:'PE',text:"I have researched, prepared, and planned a financial move extensively — and then not taken it."},{p:'PE',text:"I wait until I understand something completely before I act on it financially — which means I often wait a very long time."},{p:'PE',text:"I have started and stopped financial habits — saving, investing, trading — multiple times, often just before the point of real progress."},{p:'PE',text:"The fear of making the wrong financial decision is stronger than the desire to make any decision at all."},{p:'J',text:"I have stopped or pulled back from financial commitments at the exact moment they were starting to work."},{p:'J',text:"I find myself uncomfortable with success — as though something inside me wants to dismantle it before I can fully feel it."},{p:'J',text:"When real momentum builds in my financial life, I notice a quiet voice asking whether I am ready for what this would require me to become."},{p:'J',text:"I have walked away from things I knew were working — and the timing of my exit was suspiciously close to a breakthrough."}];
+
+const PATTERN_DATA={E:{name:'The Emergency Pattern',color:'#8B1A1A',truth:"You are not bad with money. Your nervous system is wired for crisis. Every paycheck arrives as a problem to solve rather than a resource to steward. Calm is the unfamiliar territory — not chaos.",theology:"The Scriptures teach provision — 'Give us this day our daily bread' — but this passage has been unconsciously absorbed as permission to live only day by day. Stewardship requires a longer view than survival allows.",interrupt:"Your sovereign interrupt is margin — intentional, protected financial breathing room. Start with one week of expenses saved and untouched. Let the discomfort of not using it be your first act of pattern breaking."},SC:{name:'The Scarcity Pattern',color:'#533AB7',truth:"You do not lack resources — you lack the felt sense that there is enough. This is not a financial problem. It is a perceptual one. Your brain has been trained to see shortage even inside sufficiency.",theology:"'The Lord is my shepherd; I shall not want' is not a passive promise — it is an active identity. Scarcity thinking contradicts the character of the God you say you trust. Abundance is not greed. It is alignment.",interrupt:"Your sovereign interrupt is the Abundance Statement — one specific truth about what you have, spoken daily until the nervous system believes it. Gratitude is not soft. It is neurological rewiring."},V:{name:'The Victim Pattern',color:'#993556',truth:"The system is not fair. Your background has shaped your starting point. Both of these things are true — and neither of them is the full story. The pattern runs when external circumstances become the permanent explanation rather than the honest context.",theology:"Joseph did not choose the pit, the slave market, or the prison. He chose what he did in each of them. The Scripture does not promise a fair starting line. It promises that the God who was with Joseph is with you.",interrupt:"Your sovereign interrupt is the Ownership Question: 'What is the one thing in this situation that I can choose differently?' Not everything. One thing. Sovereignty begins there."},M:{name:'The Mirror Pattern',color:'#BA7517',truth:"You have been building someone else's version of your financial life. The decisions driven by what others might think are consuming resources that belong to your actual future. Comparison is the thief of vision.",theology:"'Let each one examine his own work, and then he will have reason for boasting in himself alone, and not in his neighbour.' Galatians 6:4. The race was never meant to include spectators of other lanes.",interrupt:"Your sovereign interrupt is the Vision Audit — a written answer to: what does financial success look like for me when nobody is watching? Build toward that. Only that."},I:{name:'The Impulse Pattern',color:'#D85A30',truth:"The urgency you feel around money is not intuition. It is anxiety in disguise. The window is not closing. Your nervous system has learned to attach urgency to financial decisions as a way of bypassing the discomfort of waiting.",theology:"'The plans of the diligent lead to profit as surely as haste leads to poverty.' Proverbs 21:5. The pattern is not passion. It is impatience — and impatience has a price that compounds silently.",interrupt:"Your sovereign interrupt is the 72-Hour Rule. No unplanned financial decision is executed in under 72 hours. If the opportunity is real, it will survive the wait."},F:{name:'The Fortress Pattern',color:'#1D9E75',truth:"The walls you built to protect yourself from financial hurt have become the walls that are keeping your wealth out. Self-sufficiency curdled into isolation, and the independence that once kept you safe has become an identity harder to change than a strategy.",theology:"'The eye cannot say to the hand, I have no need of you.' 1 Corinthians 12:21. The body of Christ was designed for interdependence. God is described as the fortress — the sovereign is invited to live inside one, not become one.",interrupt:"Your sovereign interrupt is one intentional ask — one specific question to one specific person who has done what you are trying to do. Receiving help is not weakness. It is trust."},ID:{name:'The Identity Pattern',color:'#185FA5',truth:"You are not waiting for wealth to become available to you. You are waiting to become the kind of person who has it. That person is not somewhere in the future. They are the version of you that makes one different decision today.",theology:"'For as he thinks in his heart, so is he.' Proverbs 23:7. The inherited lie — that people like you don't build wealth — is not from God. It is from a broken generational script. It can be rewritten. It must be.",interrupt:"Your sovereign interrupt is the Evidence Audit — one specific financial decision made differently, written down and kept. The new identity is built one proof at a time, not one motivation at a time."},OB:{name:'The Obligation Pattern',color:'#0F6E56',truth:"You are not generous. You are obligated — and there is a difference that is costing you the future you say you want to build. Genuine generosity flows from surplus. Obligation flows from fear.",theology:"'Each one must give as he has decided in his heart, not reluctantly or under compulsion, for God loves a cheerful giver.' 2 Corinthians 9:7. Compelled giving is not biblical generosity. It is compliance.",interrupt:"Your sovereign interrupt is the Sovereign Giving Plan — a defined, intentional giving commitment made in advance, with a clear ceiling. What goes beyond the plan is a boundary, not a failure of character."},PE:{name:'The Perfectionism Pattern',color:'#2D6A4F',truth:"You are not being careful. You are avoiding. The research, the preparation, the one more course before you start — these are not discipline. They are sophisticated procrastination with an intellectual alibi.",theology:"The servant who buried his talent did not lose it. He protected it. And he was condemned. 'You wicked and slothful servant.' Matthew 25:26. Perfection is not faithfulness. Deployment is.",interrupt:"Your sovereign interrupt is the Minimum Viable Action — the smallest possible version of the financial move, taken this week, with imperfect information. Done imperfectly is exponentially more valuable than planned perfectly."},J:{name:'The Jonah Pattern',color:'#7C3AED',truth:"You are not afraid of failing. You are afraid of what succeeding would require you to become. The exit arrives precisely at the threshold of transformation — not because something went wrong, but because something started going right.",theology:"Jonah was not unqualified. He was not untrained. He was unwilling to be the specific person his calling required him to become. The calling waited. It always does.",interrupt:"Your sovereign interrupt is the Threshold Protocol. Define your exit point in advance. Name it. Share it with one accountability partner. When that moment arrives: this is the pattern. I do not exit here. I take one more step."}};
+
+const PATTERN_ORDER=['E','SC','V','M','I','F','ID','OB','PE','J'];
+let current=0,answers=new Array(40).fill(null),scores={};
+
+function startAssessment(){document.getElementById('screen-intro').style.display='none';document.getElementById('screen-questions').style.display='block';renderQuestion();}
+
+function renderQuestion(){const q=QUESTIONS[current];document.getElementById('q-num').textContent=`Question ${current+1} of 40`;document.getElementById('q-label').textContent=`Question ${current+1} of 40`;document.getElementById('q-pct').textContent=Math.round((current/40)*100)+'%';document.getElementById('progress-fill').style.width=((current/40)*100)+'%';document.getElementById('q-text').textContent=q.text;document.getElementById('btn-back').disabled=current===0;document.getElementById('btn-next').disabled=answers[current]===null;document.querySelectorAll('.scale-btn').forEach(btn=>{btn.classList.toggle('selected',parseInt(btn.dataset.val)===answers[current]);});const block=document.getElementById('q-block');block.style.animation='none';void block.offsetWidth;block.style.animation='fadeIn .3s ease';}
+
+function selectAnswer(val){answers[current]=val;document.querySelectorAll('.scale-btn').forEach(btn=>{btn.classList.toggle('selected',parseInt(btn.dataset.val)===val);});document.getElementById('btn-next').disabled=false;if(current<39)setTimeout(()=>goNext(),300);}
+
+function goNext(){if(answers[current]===null)return;if(current<39){current++;renderQuestion();}else{document.getElementById('screen-questions').style.display='none';document.getElementById('screen-gate').style.display='block';}}
+
+function goBack(){if(current>0){current--;renderQuestion();}}
+
+function calcScores(){const s={E:0,SC:0,V:0,M:0,I:0,F:0,ID:0,OB:0,PE:0,J:0};QUESTIONS.forEach((q,i)=>{if(answers[i])s[q.p]+=answers[i];});return s;}
+
+async function submitGate(){
+  const name=document.getElementById('gate-name').value.trim();
+  const email=document.getElementById('gate-email').value.trim();
+  const errorEl=document.getElementById('gate-error');
+  const btn=document.getElementById('gate-submit');
+  if(!email||!email.includes('@')){errorEl.style.display='block';return;}
+  errorEl.style.display='none';
+  btn.textContent='Loading...';
+  btn.disabled=true;
+  const s=calcScores();
+  const sorted=PATTERN_ORDER.slice().sort((a,b)=>s[b]-s[a]);
+  const primary=PATTERN_DATA[sorted[0]].name;
+  const secondary=PATTERN_DATA[sorted[1]].name;
+  const tertiary=PATTERN_DATA[sorted[2]].name;
+  try{await fetch('/subscribe',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,email,primary_pattern:primary,secondary_pattern:secondary,tertiary_pattern:tertiary})});}catch(e){}
+  showResults(name);
+}
+
+function showResults(name){
+  name=name||'Friend';
+  scores=calcScores();
+  const sorted=PATTERN_ORDER.slice().sort((a,b)=>scores[b]-scores[a]);
+  const primary=sorted[0],secondary=sorted[1],tertiary=sorted[2];
+  const maxScore=20;
+  document.getElementById('screen-gate').style.display='none';
+  const el=document.getElementById('screen-results');
+  el.style.display='block';
+  const pd=PATTERN_DATA;
+  function patternCard(key,badge,badgeClass){const d=pd[key];const sc=scores[key];const pct=Math.round((sc/maxScore)*100);return`<div class="pattern-card"><div class="pattern-card-header"><div><div class="pattern-badge ${badgeClass}">${badge}</div><div class="pattern-name">${d.name}</div></div><div class="pattern-score-ring" style="border-color:${d.color}"><div class="score-num" style="color:${d.color}">${sc}</div><div class="score-max">/ 20</div></div></div><div class="pattern-card-body"><div class="bar-wrap"><div class="bar-fill" style="width:${pct}%;background:${d.color}"></div></div><div class="pattern-truth">${d.truth}</div><div class="pattern-theology"><div class="p-theology-label">The theological root</div><div class="p-theology-text">${d.theology}</div></div><div class="pattern-interrupt"><strong>Your sovereign interrupt —</strong> ${d.interrupt}</div></div></div>`;}
+  function allPatternsBar(){return sorted.map((key,i)=>{const pct=Math.round((scores[key]/maxScore)*100);const col=i<3?PATTERN_DATA[key].color:'var(--border)';return`<div class="ap-row"><div class="ap-name" style="font-size:12px;color:${i<3?'var(--dark)':'var(--mid)'}">${PATTERN_DATA[key].name.replace('The ','')}</div><div class="ap-bar-wrap"><div class="ap-bar-fill" style="width:${pct}%;background:${col}"></div></div><div class="ap-score">${scores[key]}</div></div>`;}).join('');}
+  el.innerHTML=`<div class="results"><div class="results-header"><div class="results-eyebrow">Your Pattern Report, ${name}</div><div class="results-name">${pd[primary].name}</div><p class="results-tagline">This is your dominant pattern. Below it, a secondary and tertiary pattern that reinforce it. Understanding all three is how the cycle breaks.</p></div>${patternCard(primary,'Primary Pattern','badge-primary')}${patternCard(secondary,'Secondary Pattern','badge-secondary')}${patternCard(tertiary,'Tertiary Pattern','badge-tertiary')}<div class="all-patterns" style="margin-top:2rem"><div class="ap-title">Your full pattern profile</div>${allPatternsBar()}</div><div class="cta-box"><div class="cta-label">Ready to break the pattern?</div><div class="cta-title">Sovereignty OS was built for exactly where you are right now.</div><div class="cta-body">A 12-month transformation environment for people of faith who are ready to become the first generation in their family line to build sovereign wealth. The patterns you just named are the first domino.</div><button class="cta-btn" onclick="window.open('https://sovereigntyos.com','_blank')">Learn About Sovereignty OS</button></div><div class="share-section"><div class="share-title">Know someone running one of these patterns?</div><p class="share-sub">The most powerful thing you can do for someone you love is show them the pattern before it costs them another decade. Share the assessment.</p><button class="share-btn" onclick="shareAssessment()">Share the Assessment</button><button class="restart-btn" onclick="restartAssessment()">Retake</button></div></div>`;
+  setTimeout(()=>{el.querySelectorAll('.bar-fill,.ap-bar-fill').forEach(b=>{const w=b.style.width;b.style.width='0';setTimeout(()=>b.style.width=w,50);});},100);
+}
+
+function shareAssessment(){if(navigator.share){navigator.share({title:'The 10 Poverty Patterns Assessment',text:'I just discovered my primary poverty pattern. Take the assessment — it will change how you see your financial life.',url:window.location.href});}else{navigator.clipboard.writeText(window.location.href).then(()=>alert('Link copied to clipboard'));}}
+
+function restartAssessment(){current=0;answers=new Array(40).fill(null);scores={};document.getElementById('screen-results').style.display='none';document.getElementById('screen-intro').style.display='block';}
+</script>
+</body>
+</html>
