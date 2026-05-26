@@ -20,11 +20,16 @@ const server = http.createServer((req, res) => {
     req.on('data', chunk => body += chunk);
     req.on('end', () => {
       try {
-        const { email, name } = JSON.parse(body);
+        const { email, name, primary_pattern, secondary_pattern, tertiary_pattern } = JSON.parse(body);
         const payload = JSON.stringify({
           api_key: KIT_API_KEY,
           email: email,
-          first_name: name
+          first_name: name,
+          fields: {
+            primary_pattern: primary_pattern || '',
+            secondary_pattern: secondary_pattern || '',
+            tertiary_pattern: tertiary_pattern || ''
+          }
         });
         const options = {
           hostname: 'api.convertkit.com',
